@@ -1,0 +1,32 @@
+<%= stylesheet_link_tag 'index', :media => "all" %>
+<body>
+  <div class="image-container">
+    <%= image_tag 'image6.jpg', class:'front-image' %> 
+    <%= image_tag 'image2.jpg', class:'front-image' %> 
+    <%= image_tag 'image3.jpg', class:'front-image' %> 
+    <%= image_tag 'image1.jpg', class:'front-image' %> 
+  </div>
+
+  <div class="search-container">
+    <h2>合言葉を入力</h2>
+    <%= form_tag({controller:"photos", action:"index"}, method: :get) do %>
+      <%= text_field_tag :search ,'',{class: "search"} %>
+      <input id="sbtn5" type="submit" value="検索" />
+    <% end %>
+  </div>
+  <h2 class="search-result">検索結果</h2>
+  <div class="box">
+    <div class="tweets-container">
+      <% @tweets.each do |t| %>
+        <div class="photo-container">
+           <%= image_tag t.image_url, size: "380x300", class: 'img' if t.image? %>
+          <div class="option_btn">
+            <% if user_signed_in? && current_user.id == t.user_id %>  
+              <%= button_to "削除する", photo_path(t.id), method: :delete, class: "today" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</body>

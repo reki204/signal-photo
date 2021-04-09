@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SignalPhoto</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if flash[:notice] %>
+      <div class="notification">
+        <p><%= notice %></p>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div class="notificaiton alert">
+        <p><%= alert %></p>
+      </div>
+    <% end %>
+
+    <header>
+      <h1><%= link_to "Signal Photo", root_path, class: "font-title" %></h1>
+      <div class="header-list">
+        <ul>
+          <% if user_signed_in? %>
+            <li><%= link_to "ホーム",  photos_path, class: "link"%></li>
+            <li><%= link_to "新規投稿", new_photo_path,class: "link" %></li>
+            <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete,class: "link" %></li>
+          <% else %>
+            <li><%= link_to '新規登録', new_user_registration_path,class: "link" %></li>
+            <li><%= link_to 'ログイン', photos_path,class: "link" %></li>
+          <% end %>
+        </ul>
+      </div>
+    </header>
+
+    <%= yield %>
+  </body>
+</html>

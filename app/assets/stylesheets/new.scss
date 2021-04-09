@@ -1,0 +1,53 @@
+.post-container {
+  margin: 50px auto;
+  width: 60%;
+  border: solid #d3def1;
+  border-radius: 10px;
+  text-align: center;
+  background-color: white;
+  padding: 20px;
+}
+.title {
+  font-size: 32px;
+  font-weight: bold;
+}
+.text_field {
+  width: 60%;
+  height: 40px;
+}
+input[type="text"] {
+  border-radius: 4px;
+  font-size: 20px;
+}
+.sub {
+  width: 200px;
+  font-size: 20px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #00acee;
+  color: white;
+  border: none;
+  transition: all  0.3s ease;
+}
+.sub:hover {
+  background-color: white;
+  color: #00acee;
+  border: 1px solid #000000;
+}
+
+input[type="file"] {
+  width: 350px;
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+.label p{
+  font-size: 25px;
+  padding-top: 30px;
+}
+.new-container{
+  background-image: image-url("image8.jpg");
+  background-size: cover;
+
+}
