@@ -13,16 +13,11 @@
  *= require_tree .
  *= require_self
  */
- * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-body {
+
+ body {
   min-height: 100vh;
   position: relative; 
-  font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
-    Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+  font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -65,10 +60,6 @@ header {
   -o-transition: all 0.3s ease;
   transition: all  0.3s ease;
 }
-link:hover {
-  background: white;
-  color: rgb(224, 164, 11);
-}
 header h1 {
   color: white;
   margin-left: 20px;
@@ -82,5 +73,13 @@ header ul {
 }
 header li {
   list-style: none;
-  margin-right: 40px;
+  margin:0 40px;
+}
+@media screen and (max-width: 700px) {
+  .link {
+    font-size: 0.5rem;
+  }
+  header li {
+    margin: 0 10px;
+  }
 }

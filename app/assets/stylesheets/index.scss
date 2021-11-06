@@ -66,13 +66,13 @@ body {
   text-align: center;
   margin-left: 10px;
   padding: 7px;
-  background-color: #7fbfff; /*ボタン色*/
-  border-radius: 5px; /*角丸*/
+  background-color: #7fbfff; 
+  border-radius: 5px; 
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
 .today:hover{
-  background-color: white; /*ボタン色*/
+  background-color: white; 
   border: 1px solid #000000;
 }
 .button_to {
