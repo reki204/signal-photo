@@ -11,14 +11,14 @@ RSpec.describe "Photos", type: :request do
   describe 'GET #index' do
     it 'returns http success' do
       get photos_path
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:success)
     end
   end
 
   describe 'GET #new' do
     it 'returns http success' do
       get new_photo_path
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:success)
     end
   end
 
