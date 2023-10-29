@@ -4,6 +4,9 @@ RUN apt-get update -qq && apt-get install -y vim nodejs postgresql-client npm
 RUN mkdir /myapp
 
 WORKDIR /myapp
+
+RUN npm install --global yarn
+
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
