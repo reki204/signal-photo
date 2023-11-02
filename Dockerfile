@@ -1,6 +1,8 @@
 FROM ruby:2.7.2
  
-RUN apt-get update -qq && apt-get install -y vim nodejs postgresql-client npm 
+RUN apt-get update -qq && apt-get install -y vim postgresql-client
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && apt-get install -y nodejs
+
 RUN mkdir /myapp
 
 WORKDIR /myapp
