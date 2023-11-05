@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2023-11-03T06:10:14+00:00">2023-11-03T06:10:14+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2023-11-05T08:22:24+00:00">2023-11-05T08:22:24+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="yellow">
-  87.06%
+  88.37%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
-       <span class="red">
-         0.94
+       <span class="green">
+         1.13
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>170</b> relevant lines,
-    <span class="green"><b>148</b> lines covered</span> and
-    <span class="red"><b>22</b> lines missed. </span>
+    <b>172</b> relevant lines,
+    <span class="green"><b>152</b> lines covered</span> and
+    <span class="red"><b>20</b> lines missed. </span>
     (<span class="yellow">
-  87.06%
+  88.37%
 </span>
 )
   </div>
@@ -359,11 +359,11 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#e1c65d72c54475d56beae9658169b8b387a0c4be" class="src_link" title="spec/factories/photos.rb">spec/factories/photos.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">8</td>
-            <td class="cell--number">6</td>
-            <td class="cell--number">6</td>
+            <td class="cell--number">13</td>
+            <td class="cell--number">7</td>
+            <td class="cell--number">7</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">1.00</td>
+            <td class="cell--number">1.71</td>
             
           </tr>
         
@@ -374,18 +374,18 @@
             <td class="cell--number">5</td>
             <td class="cell--number">5</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">1.00</td>
+            <td class="cell--number">5.80</td>
             
           </tr>
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#653fa9f88d2a0ff564f9e76e8d917d76bfde037f" class="src_link" title="spec/models/photo_spec.rb">spec/models/photo_spec.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">83.33 %</td>
+            <td class="green strong cell--number t-file__coverage">100.00 %</td>
             <td class="cell--number">22</td>
             <td class="cell--number">12</td>
-            <td class="cell--number">10</td>
-            <td class="cell--number">2</td>
-            <td class="cell--number">0.83</td>
+            <td class="cell--number">12</td>
+            <td class="cell--number">0</td>
+            <td class="cell--number">1.08</td>
             
           </tr>
         
@@ -402,12 +402,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#3d7772c0c032ab2bddcc3ae736c44b1953125918" class="src_link" title="spec/rails_helper.rb">spec/rails_helper.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">84.62 %</td>
-            <td class="cell--number">64</td>
-            <td class="cell--number">13</td>
-            <td class="cell--number">11</td>
+            <td class="yellow strong cell--number t-file__coverage">85.71 %</td>
+            <td class="cell--number">65</td>
+            <td class="cell--number">14</td>
+            <td class="cell--number">12</td>
             <td class="cell--number">2</td>
-            <td class="cell--number">0.85</td>
+            <td class="cell--number">0.86</td>
             
           </tr>
         
@@ -8090,8 +8090,8 @@
     
 
     <div class="t-line-summary">
-      <b>6</b> relevant lines.
-      <span class="green"><b>6</b> lines covered</span> and
+      <b>7</b> relevant lines.
+      <span class="green"><b>7</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
 
@@ -8136,8 +8136,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="4">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="3" data-linenumber="4">
+            <span class="hits">3</span>
             
 
             
@@ -8147,8 +8147,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="5">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="3" data-linenumber="5">
+            <span class="hits">3</span>
             
 
             
@@ -8164,12 +8164,67 @@
 
             
 
-            <code class="ruby">    image { &#39;image&#39; }</code>
+            <code class="ruby">    image {</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="7">
+          <li class="covered" data-hits="2" data-linenumber="7">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">      Rack::Test::UploadedFile.new(</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="8">
+            
+            
+
+            
+
+            <code class="ruby">        Rails.root.join(&#39;spec&#39;, &#39;fixtures&#39;, &#39;spec_image.jpg&#39;),</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="9">
+            
+            
+
+            
+
+            <code class="ruby">        &#39;image/jpg&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="10">
+            
+            
+
+            
+
+            <code class="ruby">      )</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="11">
+            
+            
+
+            
+
+            <code class="ruby">    }</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="12">
             
             
 
@@ -8180,7 +8235,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="8">
+          <li class="never" data-hits="" data-linenumber="13">
             
             
 
@@ -8244,8 +8299,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="3">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="9" data-linenumber="3">
+            <span class="hits">9</span>
             
 
             
@@ -8255,8 +8310,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="4">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="9" data-linenumber="4">
+            <span class="hits">9</span>
             
 
             
@@ -8266,8 +8321,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="5">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="9" data-linenumber="5">
+            <span class="hits">9</span>
             
 
             
@@ -8307,8 +8362,8 @@
   <div class="header">
     <h3>spec/models/photo_spec.rb</h3>
     <h4>
-      <span class="yellow">
-  83.33%
+      <span class="green">
+  100.0%
 </span>
 
       lines covered
@@ -8318,8 +8373,8 @@
 
     <div class="t-line-summary">
       <b>12</b> relevant lines.
-      <span class="green"><b>10</b> lines covered</span> and
-      <span class="red"><b>2</b> lines missed.</span>
+      <span class="green"><b>12</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
     </div>
 
     
@@ -8385,8 +8440,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="6">
-            
+          <li class="covered" data-hits="2" data-linenumber="6">
+            <span class="hits">2</span>
             
 
             
@@ -8413,18 +8468,18 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="9">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="9">
+            <span class="hits">1</span>
             
 
-            <code class="ruby"></code>
+            
+
+            <code class="ruby">    context &#39;when valid parameters&#39; do</code>
           </li>
         </div>
       
@@ -8435,7 +8490,7 @@
 
             
 
-            <code class="ruby">  context &#39;when valid parameters&#39; do</code>
+            <code class="ruby">      it &#39;all fields are filled in&#39; do</code>
           </li>
         </div>
       
@@ -8446,18 +8501,18 @@
 
             
 
-            <code class="ruby">    it &#39;all fields are filled in&#39; do</code>
+            <code class="ruby">        expect(@photo).to be_valid</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="12">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="12">
+            
             
 
             
 
-            <code class="ruby">      expect(@photo).to be_valid</code>
+            <code class="ruby">      end</code>
           </li>
         </div>
       
@@ -8479,18 +8534,18 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="15">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="15">
+            <span class="hits">1</span>
             
 
-            <code class="ruby"></code>
+            
+
+            <code class="ruby">    context &#39;when invalid parameters&#39; do</code>
           </li>
         </div>
       
@@ -8501,7 +8556,7 @@
 
             
 
-            <code class="ruby">  context &#39;when invalid parameters&#39; do</code>
+            <code class="ruby">      it &#39;not all fields are filled in.&#39; do</code>
           </li>
         </div>
       
@@ -8512,7 +8567,7 @@
 
             
 
-            <code class="ruby">    it &#39;not all fields are filled in.&#39; do</code>
+            <code class="ruby">        @photo = Photo.new</code>
           </li>
         </div>
       
@@ -8523,18 +8578,18 @@
 
             
 
-            <code class="ruby">      @photo = Question.new</code>
+            <code class="ruby">        expect(@photo.save).to be_falsey</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="19">
+          <li class="never" data-hits="" data-linenumber="19">
             
             
 
             
 
-            <code class="ruby">      expect(@photo.save).to be_falsey</code>
+            <code class="ruby">      end</code>
           </li>
         </div>
       
@@ -8854,7 +8909,7 @@
     <h3>spec/rails_helper.rb</h3>
     <h4>
       <span class="yellow">
-  84.62%
+  85.71%
 </span>
 
       lines covered
@@ -8863,8 +8918,8 @@
     
 
     <div class="t-line-summary">
-      <b>13</b> relevant lines.
-      <span class="green"><b>11</b> lines covered</span> and
+      <b>14</b> relevant lines.
+      <span class="green"><b>12</b> lines covered</span> and
       <span class="red"><b>2</b> lines missed.</span>
     </div>
 
@@ -9239,7 +9294,18 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="34">
+          <li class="covered" data-hits="1" data-linenumber="34">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  config.include FactoryBot::Syntax::Methods</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="35">
             
             
 
@@ -9250,7 +9316,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="35">
+          <li class="covered" data-hits="1" data-linenumber="36">
             <span class="hits">1</span>
             
 
@@ -9261,24 +9327,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="36">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
           <li class="never" data-hits="" data-linenumber="37">
             
             
 
             
 
-            <code class="ruby">  # If you&#39;re not using ActiveRecord, or you&#39;d prefer not to run each of your</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -9289,7 +9344,7 @@
 
             
 
-            <code class="ruby">  # examples within a transaction, remove the following line or assign false</code>
+            <code class="ruby">  # If you&#39;re not using ActiveRecord, or you&#39;d prefer not to run each of your</code>
           </li>
         </div>
       
@@ -9300,12 +9355,23 @@
 
             
 
+            <code class="ruby">  # examples within a transaction, remove the following line or assign false</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="40">
+            
+            
+
+            
+
             <code class="ruby">  # instead of true.</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="40">
+          <li class="covered" data-hits="1" data-linenumber="41">
             <span class="hits">1</span>
             
 
@@ -9316,24 +9382,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="41">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
           <li class="never" data-hits="" data-linenumber="42">
             
             
 
             
 
-            <code class="ruby">  # You can uncomment this line to turn off ActiveRecord support entirely.</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -9344,7 +9399,7 @@
 
             
 
-            <code class="ruby">  # config.use_active_record = false</code>
+            <code class="ruby">  # You can uncomment this line to turn off ActiveRecord support entirely.</code>
           </li>
         </div>
       
@@ -9355,7 +9410,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  # config.use_active_record = false</code>
           </li>
         </div>
       
@@ -9366,7 +9421,7 @@
 
             
 
-            <code class="ruby">  # RSpec Rails can automatically mix in different behaviours to your tests</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -9377,7 +9432,7 @@
 
             
 
-            <code class="ruby">  # based on their file location, for example enabling you to call `get` and</code>
+            <code class="ruby">  # RSpec Rails can automatically mix in different behaviours to your tests</code>
           </li>
         </div>
       
@@ -9388,7 +9443,7 @@
 
             
 
-            <code class="ruby">  # `post` in specs under `spec/controllers`.</code>
+            <code class="ruby">  # based on their file location, for example enabling you to call `get` and</code>
           </li>
         </div>
       
@@ -9399,7 +9454,7 @@
 
             
 
-            <code class="ruby">  #</code>
+            <code class="ruby">  # `post` in specs under `spec/controllers`.</code>
           </li>
         </div>
       
@@ -9410,7 +9465,7 @@
 
             
 
-            <code class="ruby">  # You can disable this behaviour by removing the line below, and instead</code>
+            <code class="ruby">  #</code>
           </li>
         </div>
       
@@ -9421,7 +9476,7 @@
 
             
 
-            <code class="ruby">  # explicitly tag your specs with their type, e.g.:</code>
+            <code class="ruby">  # You can disable this behaviour by removing the line below, and instead</code>
           </li>
         </div>
       
@@ -9432,7 +9487,7 @@
 
             
 
-            <code class="ruby">  #</code>
+            <code class="ruby">  # explicitly tag your specs with their type, e.g.:</code>
           </li>
         </div>
       
@@ -9443,7 +9498,7 @@
 
             
 
-            <code class="ruby">  #     RSpec.describe UsersController, type: :controller do</code>
+            <code class="ruby">  #</code>
           </li>
         </div>
       
@@ -9454,7 +9509,7 @@
 
             
 
-            <code class="ruby">  #       # ...</code>
+            <code class="ruby">  #     RSpec.describe UsersController, type: :controller do</code>
           </li>
         </div>
       
@@ -9465,7 +9520,7 @@
 
             
 
-            <code class="ruby">  #     end</code>
+            <code class="ruby">  #       # ...</code>
           </li>
         </div>
       
@@ -9476,7 +9531,7 @@
 
             
 
-            <code class="ruby">  #</code>
+            <code class="ruby">  #     end</code>
           </li>
         </div>
       
@@ -9487,7 +9542,7 @@
 
             
 
-            <code class="ruby">  # The different available types are documented in the features, such as in</code>
+            <code class="ruby">  #</code>
           </li>
         </div>
       
@@ -9498,12 +9553,23 @@
 
             
 
+            <code class="ruby">  # The different available types are documented in the features, such as in</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="58">
+            
+            
+
+            
+
             <code class="ruby">  # https://relishapp.com/rspec/rspec-rails/docs</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="58">
+          <li class="covered" data-hits="1" data-linenumber="59">
             <span class="hits">1</span>
             
 
@@ -9514,7 +9580,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="59">
+          <li class="never" data-hits="" data-linenumber="60">
             
             
 
@@ -9525,7 +9591,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="60">
+          <li class="never" data-hits="" data-linenumber="61">
             
             
 
@@ -9536,7 +9602,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="61">
+          <li class="covered" data-hits="1" data-linenumber="62">
             <span class="hits">1</span>
             
 
@@ -9547,7 +9613,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="62">
+          <li class="never" data-hits="" data-linenumber="63">
             
             
 
@@ -9558,7 +9624,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="63">
+          <li class="never" data-hits="" data-linenumber="64">
             
             
 
@@ -9569,7 +9635,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="64">
+          <li class="never" data-hits="" data-linenumber="65">
             
             
 
