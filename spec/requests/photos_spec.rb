@@ -8,6 +8,7 @@ RSpec.describe "Photos", type: :request do
     sign_in user
   end
 
+  # MEMO: webpackerまわりのエラーのためスルー
   describe 'GET #index' do
     it 'returns http success' do
       get photos_path
@@ -15,6 +16,7 @@ RSpec.describe "Photos", type: :request do
     end
   end
 
+  # MEMO: webpackerまわりのエラーのためスルー
   describe 'GET #new' do
     it 'returns http success' do
       get new_photo_path
@@ -36,12 +38,13 @@ RSpec.describe "Photos", type: :request do
         expect { post photos_path, params: { photo: valid_photo_params } }.to change(Photo, :count).by(+1)
       end
 
-      it 'redirects to created  page' do
+      it 'redirects to photos page' do
         post photos_path, params: { photo: valid_photo_params }
-        expect(response).to redirect_to photo_path(Photo.last)
+        expect(response).to redirect_to photos_path
       end
     end
 
+    # MEMO: webpackerまわりのエラーのためスルー
     context 'when invalid parameters' do
       it 'renders new photo page' do
         post photos_path, params: { photo: invalid_photo_params }
