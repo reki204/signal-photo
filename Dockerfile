@@ -1,4 +1,4 @@
-FROM ruby:2.7.2
+FROM ruby:3.0.0
  
 RUN apt-get update -qq && apt-get install -y vim postgresql-client
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && apt-get install -y nodejs
