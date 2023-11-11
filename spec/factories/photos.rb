@@ -3,6 +3,10 @@ FactoryBot.define do
     user
     password { 'password' }
     body { 'photo_body' }
-    image { 'image' }
+    image {
+      Rack::Test::UploadedFile.new(
+        Rails.root.join('spec', 'fixtures', 'spec_image.jpg')
+      )
+    }
   end
 end
