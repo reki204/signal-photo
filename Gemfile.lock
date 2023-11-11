@@ -293,6 +293,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
+    unf_ext (0.0.8.2-x64-mingw32)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -349,7 +350,7 @@ DEPENDENCIES
   webpacker
 
 RUBY VERSION
-   ruby 2.7.2p137
+   ruby 3.2.2p53
 
 BUNDLED WITH
-   2.1.4
+   2.2.3
