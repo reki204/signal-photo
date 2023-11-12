@@ -370,7 +370,7 @@ DEPENDENCIES
   pg
   puma
   rack-mini-profiler
-  rails (~> 7.0, >= 7.0.8)
+  rails (~> 7.1, >= 7.1.2)
   rspec-rails
   sass-rails
   selenium-webdriver
