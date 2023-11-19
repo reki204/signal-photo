@@ -8,7 +8,6 @@ RSpec.describe "Photos", type: :request do
     sign_in user
   end
 
-  # MEMO: webpackerまわりのエラーのためスルー
   describe 'GET #index' do
     it 'returns http success' do
       get photos_path
@@ -16,7 +15,6 @@ RSpec.describe "Photos", type: :request do
     end
   end
 
-  # MEMO: webpackerまわりのエラーのためスルー
   describe 'GET #new' do
     it 'returns http success' do
       get new_photo_path
@@ -44,7 +42,6 @@ RSpec.describe "Photos", type: :request do
       end
     end
 
-    # MEMO: webpackerまわりのエラーのためスルー
     context 'when invalid parameters' do
       it 'renders new photo page' do
         post photos_path, params: { photo: invalid_photo_params }

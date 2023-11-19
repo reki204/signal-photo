@@ -19,12 +19,10 @@
     <div class="tweets-container">
       <% @tweets.each do |t| %>
         <div class="photo-container">
-           <%= image_tag t.image_url, size: "380x300", class: 'img' if t.image? %>
-          <div class="option_btn">
-            <% if user_signed_in? && current_user.id == t.user_id %>  
-              <%= button_to "削除する", photo_path(t.id), method: :delete, data: {confirm: "削除しますか？"},class: "today" %>
-            <% end %>
-          </div>
+          <%= image_tag t.image_url, class: 'img' if t.image? %>
+          <% if user_signed_in? && current_user.id == t.user_id %>  
+            <%= button_to "削除する", photo_path(t.id), method: :delete, data: {confirm: "削除しますか？"},class: "today" %>
+          <% end %>
         </div>
       <% end %>
     </div>
