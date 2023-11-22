@@ -1,13 +1,14 @@
 class PhotosController < ApplicationController
   before_action :authenticate_user!
   def index
-    if params[:search] == nil
-      @tweets= Photo.none
-    elsif params[:search] == ''
-      @tweets= Photo.none
-    else
-      @tweets = Photo.where("password LIKE ? ", params[:search])
-    end  
+    # if params[:search] == nil
+    #   @tweets= Photo.none
+    # elsif params[:search] == ''
+    #   @tweets= Photo.none
+    # else
+    #   @tweets = Photo.where("password LIKE ? ", params[:search])
+    # end
+    @tweets = Photo.match_password(params[:search])
   end
 
   def new

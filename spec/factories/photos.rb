@@ -5,7 +5,7 @@ FactoryBot.define do
     body { 'photo_body' }
     image {
       Rack::Test::UploadedFile.new(
-        Rails.root.join('spec', 'fixtures', 'spec_image.jpg')
+        Rails.root.join("spec/fixtures/spec_image.jpg")
       )
     }
   end
