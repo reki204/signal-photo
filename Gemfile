@@ -11,6 +11,7 @@ gem 'turbolinks'
 gem 'jbuilder'
 gem 'bcrypt'
 gem 'bootsnap', require: false
+gem "importmap-rails"
 
 group :development, :test do
   gem 'sqlite3'
@@ -45,6 +46,10 @@ gem 'cloudinary'
 # 認証
 gem 'devise'
 gem 'dotenv-rails'
+
+gem 'cssbundling-rails'
+gem 'jsbundling-rails'
+gem 'tailwindcss-rails'
 
 group :production do
   gem 'pg'

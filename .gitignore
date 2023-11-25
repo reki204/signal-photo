@@ -44,3 +44,5 @@ yarn-debug.log*
 coverage/
 
 public
+/app/assets/builds/*
+!/app/assets/builds/.keep
