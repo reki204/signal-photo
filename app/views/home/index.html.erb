@@ -1,60 +1,39 @@
-<%#= stylesheet_link_tag 'home', :media => "all" %>
-<h1 class="text-3xl font-bold underline">
-    Hello world!
-</h1>
-<button class="bg-gray-900 hover:bg-gray-800 text-white rounded px-4 py-2">tailwind</button>
-<button class="btn">daisyUI</button>
-
-<div class="wrapper">
-  <div class="container">
-    <div class='box'>
-      <h1 class='title'>Signal Photo</h1>
-      <div class='text'> 
-        <p>Signal Photoは無料の写真共有サービスです。</p>
-        <p>合言葉を使用して秘密の写真を投稿しましょう。</p>
+<div>
+  <div class="flex justify-center h-[680px] w-full bg-cover bg-[url('image5.jpg')]">
+    <%# text area %>
+    <div class='flex justify-center items-center'>
+      <div class="w-full max-w-md">
+        <h1 class="text-4xl font-bold text-gray-900 text-center mb-8">Signal Photo</h1>
+        <div class="text-lg mb-8">Signal Photoは無料の写真共有サービスです。合言葉を使用して秘密の写真を投稿しましょう。</div>
+        <ul class="flex justify-center mb-8">
+          <% if user_signed_in? %>
+            <li class="mr-4"><%= link_to "ホーム",  photos_path, class: "text-gray-700 hover:text-gray-900" %></li>
+            <li><%= link_to "新規投稿", new_photo_path, class: "bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded" %></li>
+          <% else %>
+            <li class="mr-4"><%= link_to "ログイン", photos_path, class: "text-gray-700 hover:text-gray-900" %></li>
+            <li><%= link_to "新規登録", new_user_registration_path, class: "bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded" %></li>
+          <% end %>
+        </ul>
       </div>
-      <ul>
-        <% if user_signed_in? %>
-          <li><%= link_to "ホーム",  photos_path %></li>
-          <li><%= link_to "新規投稿", new_photo_path %></li>
-        <% else %>
-          <li><%= link_to "ログイン", photos_path %></li>
-          <li><%= link_to "新規登録", new_user_registration_path %></li>
-        <% end %>
-      </ul>
     </div> 
   </div>
-</div>
-<div class="how_to">
-  <h2>How to use</h2>
-</div>
-<section class="use-container">
-  <div class="items">
-    <div class="item">
-      <div class="img-area">
-        <%#= image_tag 'image9.jpg' %> 
+  <div class="px-6 py-16 rounded-lg">
+    <h2 class="text-2xl font-bold text-gray-900 text-center mb-8">How to use</h2>
+    <div class="mt-4 flex flex-col md:flex-row justify-center items-center gap-4">
+      <div class="flex flex-col items-center">
+        <div class="w-4/5 bg-white rounded-lg shadow-md flex-shrink-0">
+          <%= image_tag 'image9.jpg', alt: 'step1', class: 'w-full h-full object-cover rounded-lg' %>
+        </div>
+        <dt class="text-lg font-medium text-gray-500 mt-4">Step 1</dt>
+        <dd class="mt-2 text-gray-900 text-center">新規投稿ページで合言葉と一緒に画像を投稿しましょう。</dd>
       </div>
-      <div class="text-area">
-        <h3>STEP 1</h3>
-        <p>
-          新規投稿ページで
-          <br>
-          <span>合言葉</span>と一緒に<span>画像</span>を投稿しましょう。
-        </p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="img-area">
-        <%#= image_tag 'image10.jpg' %> 
-      </div>
-      <div class="text-area">
-        <h3>STEP 2</h3>
-        <p>
-          検索ページで
-          <br>
-          <span>合言葉</span>を検索して、<span>画像</span>を表示しましょう。
-        </p>
+      <div class="flex flex-col items-center">
+        <div class="w-4/5 bg-white rounded-lg shadow-md flex-shrink-0">
+          <%= image_tag 'image10.jpg', alt: 'step2', class: 'w-full h-full object-cover rounded-lg' %>
+        </div>
+        <dt class="text-lg font-medium text-gray-500 mt-4">Step 2</dt>
+        <dd class="mt-2 text-gray-900 text-center">検索ページで合言葉を検索して、画像を表示しましょう。</dd>
       </div>
     </div>
   </div>
-</section>
+</div>
