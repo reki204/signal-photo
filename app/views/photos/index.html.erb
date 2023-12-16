@@ -1,29 +1,43 @@
-<body>
-  <div class="image-container">
-    <%= image_tag 'image6.jpg', class:'front-image' %> 
-    <%= image_tag 'image2.jpg', class:'front-image' %>  
-    <%= image_tag 'image3.jpg', class:'front-image' %>  
-    <%= image_tag 'image1.jpg', class:'front-image' %>
-  </div>
-
-  <div class="search-container">
-    <h2>合言葉を入力</h2>
-    <%= form_tag({controller:"photos", action:"index"}, method: :get) do %>
-      <%= text_field_tag :search ,'',{class: "search"} %>
-      <input id="sbtn5" type="submit" value="検索" />
+<div class='text-center p-8'>
+  <div class="p-4 rounded-md">
+    <h2 class="text-2xl font-bold mb-2">合言葉を入力</h2>
+    <%= form_tag({ controller: "photos", action: "index" }, method: :get, class: "flex items-center justify-center") do %>
+      <%= text_field_tag :search, '', class: "search-input px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" %>
+      <button class="btn ml-2 px-4 py-2 bg-neutral text-neutral-content rounded-md border-none">検索</button>
     <% end %>
   </div>
-  <h2 class="search-result">検索結果</h2>
-  <div class="box">
-    <div class="tweets-container">
+
+  <h2 class="text-2xl font-bold mt-4">検索結果</h2>
+  <div class="mt-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <% @tweets.each do |t| %>
-        <div class="photo-container">
-          <%= image_tag t.image_url, class: 'img' if t.image? %>
-          <% if user_signed_in? && current_user.id == t.user_id %>  
-            <%= button_to "削除する", photo_path(t.id), method: :delete, data: {confirm: "削除しますか？"},class: "today" %>
+        <% t.images.each do |image| %>
+          <div class="relative cursor-pointer" onclick="my_modal_<%= t.id %>.showModal()">
+            <%= image_tag image.url, class: 'object-cover w-full h-64 rounded-md' if t.images? %>
+          </div>
+          <% if user_signed_in? && current_user.id == t.user_id %>
+            <%= button_to "削除する",
+              photo_path(t.id),
+              method: :delete,
+              form: {
+                data: {
+                  turbo_confirm: "削除しますか？"
+                }
+              },
+              class: "btn absolute bottom-2 right-2 px-4 py-2 bg-red-500 text-white rounded-md opacity-50 border-none"
+            %>
           <% end %>
-        </div>
+          <dialog id="my_modal_<%= t.id %>" class="modal">
+            <div class="modal-box p-0 rounded-none">
+              <%= image_tag image.url %>
+            </div>
+            <form method="dialog" class="modal-backdrop">
+              <button></button>
+            </form>
+          </dialog>
+        <% end %>
       <% end %>
     </div>
   </div>
-</body>
+  <%#= paginate @tweets %>
+</div>

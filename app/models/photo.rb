@@ -1,10 +1,10 @@
 class Photo < ApplicationRecord
   belongs_to :user
-  mount_uploader :image, ImageUploader
+  mount_uploaders :images, ImageUploader
 
   with_options presence: true do
     validates :password
-    validates :image
+    validates :images
   end
 
   def self.match_password(password)

@@ -50,6 +50,7 @@ gem 'dotenv-rails'
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 gem 'tailwindcss-rails'
+gem 'turbo-rails'
 
 group :production do
   gem 'pg'
