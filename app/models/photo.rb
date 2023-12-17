@@ -7,7 +7,7 @@ class Photo < ApplicationRecord
     validates :images
   end
 
-  def self.match_password(password)
+  def self.password_matches?(password)
     if password
       where("password = ?", password)
     else

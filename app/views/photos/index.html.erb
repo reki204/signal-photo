@@ -1,3 +1,4 @@
+<%= javascript_include_tag "deleteBtn" %>
 <div class='text-center p-8'>
   <div class="p-4 rounded-md">
     <h2 class="text-2xl font-bold mb-2">合言葉を入力</h2>
@@ -12,21 +13,25 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <% @tweets.each do |t| %>
         <% t.images.each do |image| %>
-          <div class="relative cursor-pointer" onclick="my_modal_<%= t.id %>.showModal()">
-            <%= image_tag image.url, class: 'object-cover w-full h-64 rounded-md' if t.images? %>
+          <div class="relative cursor-pointer">
+            <div onclick="my_modal_<%= t.id %>.showModal()">
+              <%= image_tag image.url, class: 'object-cover w-full h-64 rounded-md' if t.images? %>
+            </div>
+            <% if user_signed_in? && current_user.id == t.user_id %>
+              <%= link_to "削除する",
+                photo_path(t.id),
+                id: 'delete-button',
+                method: :delete,
+                remote: true,
+                form: {
+                  data: {
+                    turbo_confirm: "削除しますか？"
+                  }
+                },
+                class: "btn absolute bottom-2 right-2 px-4 py-2 bg-red-500 text-white rounded-md opacity-50 border-none"
+              %>
+            <% end %>
           </div>
-          <% if user_signed_in? && current_user.id == t.user_id %>
-            <%= button_to "削除する",
-              photo_path(t.id),
-              method: :delete,
-              form: {
-                data: {
-                  turbo_confirm: "削除しますか？"
-                }
-              },
-              class: "btn absolute bottom-2 right-2 px-4 py-2 bg-red-500 text-white rounded-md opacity-50 border-none"
-            %>
-          <% end %>
           <dialog id="my_modal_<%= t.id %>" class="modal">
             <div class="modal-box p-0 rounded-none">
               <%= image_tag image.url %>

@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
   before_action :authenticate_user!, except: :index
   def index
-    @tweets = Photo.match_password(params[:search])
+    @tweets = Photo.password_matches?(params[:search])
   end
 
   def new
@@ -21,7 +21,7 @@ class PhotosController < ApplicationController
   def destroy
     tweet = Photo.find(params[:id])
     tweet.destroy
-    redirect_to action: :index, notice: '画像を削除しました。'
+    redirect_to action: :index, notice: '画像を削除しました。', status: :see_other
   end
   
   private
