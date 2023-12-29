@@ -1,4 +1,4 @@
-<%= javascript_include_tag "deleteBtn" %>
+<%#= javascript_include_tag "deleteBtn" %>
 <div class='text-center p-8'>
   <div class="p-4 rounded-md">
     <h2 class="text-2xl font-bold mb-2">合言葉を入力</h2>
@@ -11,6 +11,7 @@
   <h2 class="text-2xl font-bold mt-4">検索結果</h2>
   <div class="mt-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <%# <% @decrypted_images.each %>
       <% @tweets.each do |t| %>
         <% t.images.each do |image| %>
           <div class="relative cursor-pointer">
@@ -18,11 +19,7 @@
               <%= image_tag image.url, class: 'object-cover w-full h-64 rounded-md' if t.images? %>
             </div>
             <% if user_signed_in? && current_user.id == t.user_id %>
-              <%= link_to "削除する",
-                photo_path(t.id),
-                id: 'delete-button',
-                method: :delete,
-                remote: true,
+              <%= link_to "削除する", photo_path(t.id), method: :delete, remote: true,
                 form: {
                   data: {
                     turbo_confirm: "削除しますか？"
@@ -46,3 +43,105 @@
   </div>
   <%#= paginate @tweets %>
 </div>
+<div>
+  <%= puts "ここからがindex.html.erbです。" %>
+  <%= @decrypted_images %>
+</div>
+<%# <div id="image-container"></div>
+
+<script>
+  window.onload = async () => {
+      const encrypted = await fetch('mike_encrypted.json').then(res => res.json());
+      const base64ImageData = encrypted['encrypted'];
+      console.log(base64ImageData);
+
+      // Base64 データをバイナリデータに変換
+      const binaryImageData = Uint8Array.from(atob(base64ImageData), c => c.charCodeAt(0));
+
+      // バイナリデータをBlobとして作成
+      const blob = new Blob([binaryImageData], { type: 'image/png' });
+
+      // BlobからDataURLを生成
+      const reader = new FileReader();
+      reader.onloadend = function () {
+          const dataURL = reader.result;
+          console.log(dataURL);
+
+          // データURLを画像として表示
+          const imageContainer = document.getElementById('image-container');
+          const img = document.createElement('img');
+          img.src = dataURL;
+          imageContainer.appendChild(img);
+      };
+      reader.readAsDataURL(blob);
+  }
+
+  // Base64 エンコードされた画像データ
+  const base64ImageData = "ここにencrypted.jsonから取得したBase64データを貼り付ける";
+
+  // 鍵と salt
+  const decryptPassword = "ここにサーバーで生成した復号のためのパスワードを貼り付ける";
+  const salt = "ここにサーバーで生成した salt を貼り付ける";
+
+  // Base64 データをデコード
+  const binaryImageData = atob(base64ImageData);
+
+  // バイナリデータを ArrayBuffer に変換
+  const arrayBuffer = new Uint8Array(binaryImageData.length);
+  for (let i = 0; i < binaryImageData.length; i++) {
+    arrayBuffer[i] = binaryImageData.charCodeAt(i);
+  }
+
+  // Web Crypto API を使用して復号
+  crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(decryptPassword),
+    'PBKDF2',
+    false,
+    ['deriveKey']
+  ).then(key => {
+    return crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: new TextEncoder().encode(salt),
+        iterations: 100000,
+        hash: 'SHA-256'
+      },
+      key,
+      {
+        name: 'AES-CBC',
+        length: 256
+      },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }).then(decryptionKey => {
+    const iv = arrayBuffer.slice(0, 16); // 先頭 16 バイトが IV
+    const encryptedData = arrayBuffer.slice(16);
+
+    // 復号
+    return crypto.subtle.decrypt(
+      {
+        name: 'AES-CBC',
+        iv: iv
+      },
+      decryptionKey,
+      encryptedData
+    );
+  }).then(decryptedData => {
+    // 復号されたデータを Blob に変換
+    const decryptedBlob = new Blob([decryptedData], { type: 'image/png' });
+
+    // Blob を Data URL に変換して表示
+    const imageContainer = document.getElementById('image-container');
+    const img = document.createElement('img');
+    const reader = new FileReader();
+    reader.onload = function () {
+      img.src = reader.result;
+      imageContainer.appendChild(img);
+    };
+    reader.readAsDataURL(decryptedBlob);
+  }).catch(error => {
+    console.error('Decryption error:', error);
+  }); %>
+<%# </script> %>
