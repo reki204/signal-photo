@@ -1,11 +1,12 @@
 class Photo < ApplicationRecord
   belongs_to :user
   mount_uploaders :images, ImageUploader
-  # before_create :generate_password_and_salt
 
   with_options presence: true do
     validates :password
     validates :images
+    validates :encrypt_password
+    validates :salt
   end
 
   def self.password_matches?(password)
@@ -16,14 +17,15 @@ class Photo < ApplicationRecord
     end
   end
 
-  # def generate_password_and_salt
-  #   self.encrypt_password = SecureRandom.hex(16)
-  #   self.salt = SecureRandom.hex(8)
-  # end
+  def generate_encrypt_password_and_salt
+    self.encrypt_password = SecureRandom.hex(16)
+    self.salt = SecureRandom.hex(8)
+  end
 
-  # 暗号化、base64変換しjsonファイルへ保存
-  def encrypt_and_save_image_to_json(image_path, encrypt_password, salt, json_path)
-    encryptor = ImageEncryptor.new(image_path, encrypt_password, salt)
+  # 画像を暗号化してJSONに保存する
+  def encrypt_and_save_image_to_json(image_path, json_path)
+    binding.pry
+    encryptor = ImageEncryptor.new(image_path, self.encrypt_password, self.salt)
     encryptor.process_and_save_image_to_json(json_path)
   end
 
