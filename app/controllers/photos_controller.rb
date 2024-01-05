@@ -7,10 +7,12 @@ class PhotosController < ApplicationController
 
     @tweets.each do |tweet|
       decrypted_images = tweet.images.map do |image|
-        @tweet = tweet
-        decrypted_data = tweet.decrypt_and_decode_to_image("public/#{tweet.password}/encrypted_#{tweet.id}.json", tweet.encrypt_password, tweet.salt)
+        {
+          tweet: tweet,
+          image_data: tweet.decrypt_and_decode_to_image("public/#{tweet.password}/encrypted_#{tweet.id}.json", tweet.encrypt_password, tweet.salt)
+        }
       end
-      @decrypted_images << decrypted_images
+      @decrypted_images.concat(decrypted_images)
     end
   end
 

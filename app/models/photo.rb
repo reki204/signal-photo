@@ -9,12 +9,10 @@ class Photo < ApplicationRecord
     validates :salt
   end
 
+  validates :password, :images, :encrypt_password, :salt, presence: true
+
   def self.password_matches?(password)
-    if password
-      where("password = ?", password)
-    else
-      none
-    end
+    password.present? ? where(password: password) : none
   end
 
   def generate_encrypt_password_and_salt
@@ -30,10 +28,10 @@ class Photo < ApplicationRecord
 
   # 復号化
   def decrypt_and_decode_to_image(encrypted_data, encrypted_password, salt)
-    if File.exist?(encrypted_data)
-      encrypted_json_data = JSON.parse(File.read(encrypted_data))
-      decryptor = ImageEncryptor.new(encrypted_json_data, encrypted_password, salt)
-      decrypted_data = decryptor.decrypt_image(encrypted_json_data)
-    end
+    return unless File.exist?(encrypted_data)
+
+    encrypted_json_data = JSON.parse(File.read(encrypted_data))
+    decryptor = ImageEncryptor.new(encrypted_json_data, encrypted_password, salt)
+    decrypted_data = decryptor.decrypt_image(encrypted_json_data)
   end
 end
