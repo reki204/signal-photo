@@ -7,87 +7,63 @@
   <h2 class="text-2xl font-bold mt-4">検索結果</h2>
   <div class="mt-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <% @decrypted_images.each do |decrypted_images| %>
+      <% @decrypted_images.each_with_index  do |decrypted_images, index| %>
         <% decrypted_images.each do |decrypted_data| %>
-          <% data_url = "data:image/jpeg;base64,#{Base64.strict_encode64(decrypted_data)}" %>
+          <% if decrypted_data.present? %>
+            <% data_url = "data:image/jpeg;base64,#{Base64.strict_encode64(decrypted_data)}" %>
 
-          <div class="relative cursor-pointer">
-            <div onclick="my_modal_<%= @tweet.id %>.showModal()">
-              <canvas id="canvas_<%= @tweet.id %>"></canvas>
+            <div class="relative cursor-pointer">
+              <div onclick="my_modal_<%= index %>.showModal()">
+                <canvas id="canvas_<%= index %>" class="object-cover w-full h-64 rounded-md"></canvas>
+              </div>
+              <%# 削除ボタン %>
+              <% if user_signed_in? && current_user.id == @tweet.user_id %>
+                <%= link_to "削除する", photo_path(@tweet.id), method: :delete, remote: true, form: { data: { turbo_confirm: "削除しますか？"}}, class: "btn absolute bottom-2 right-2 px-4 py-2 bg-red-500 text-white rounded-md opacity-50 border-none" %>
+              <% end %>
             </div>
-            <%# 削除ボタン %>
-            <% if user_signed_in? && current_user.id == @tweet.user_id %>
-              <%= link_to "削除する", photo_path(@tweet.id), method: :delete, remote: true, form: { data: { turbo_confirm: "削除しますか？"}}, class: "btn absolute bottom-2 right-2 px-4 py-2 bg-red-500 text-white rounded-md opacity-50 border-none" %>
-            <% end %>
-          </div>
 
-          <%# モーダル %>
-          <dialog id="my_modal_<%= @tweet.id %>" class="modal">
-            <div class="modal-box p-0 rounded-none">
-            </div>
-            <form method="dialog" class="modal-backdrop">
-              <button></button>
-            </form>
-          </dialog>
+            <%# モーダル %>
+            <dialog id="my_modal_<%= index %>" class="modal">
+              <div class="modal-box p-0 rounded-none">
+                <canvas class="canvas_<%= index %>"></canvas>
+              </div>
+              <form method="dialog" class="modal-backdrop">
+                <button></button>
+              </form>
+            </dialog>
 
-          <script>
-            document.addEventListener('DOMContentLoaded', (event) => {
-              const imageDataURL = '<%= data_url %>';
-              const canvasId = "canvas_<%= @tweet.id %>";
-              const canvas = document.getElementById(canvasId);
+            <script>
+              document.addEventListener('DOMContentLoaded', (event) => {
+                const imageDataURL = '<%= data_url %>';
+                const canvasId = "canvas_<%= index %>";
+                const canvas = document.getElementById(canvasId);
 
-              // Base64からBlobへの変換
-              const byteString = atob(imageDataURL.split(',')[1]);
-              const mimeString = imageDataURL.split(',')[0].split(':')[1].split(';')[0]
-              const ab = new ArrayBuffer(byteString.length);
-              const ia = new Uint8Array(ab);
-              for (let i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-              }
-              const blob = new Blob([ab], {type: mimeString});
+                // Base64からBlobへの変換
+                const byteString = atob(imageDataURL.split(',')[1]);
+                const mimeString = imageDataURL.split(',')[0].split(':')[1].split(';')[0]
+                const ab = new ArrayBuffer(byteString.length);
+                const ia = new Uint8Array(ab);
+                for (let i = 0; i < byteString.length; i++) {
+                  ia[i] = byteString.charCodeAt(i);
+                }
+                const blob = new Blob([ab], {type: mimeString});
 
-              // BlobからImageBitmapを作成し、canvasに描画
-              createImageBitmap(blob).then(imgBitmap => {
-                canvas.width = imgBitmap.width;
-                canvas.height = imgBitmap.height;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(imgBitmap, 0, 0);
+                // BlobからImageBitmapを作成し、canvasに描画
+                createImageBitmap(blob).then(imgBitmap => {
+                  canvas.width = imgBitmap.width;
+                  canvas.height = imgBitmap.height;
+                  const ctx = canvas.getContext("2d");
+                  ctx.drawImage(imgBitmap, 0, 0);
+                });
               });
-            });
-          </script>
+            </script>
+          <% end %>
         <% end %>
       <% end %>
     </div>
   </div>
 </div>
 
-<%# memo: おそらくcanvasが単体にしか反応していない。canvasが被らないようにidを振るなどして対応 %>
-
-
-<%# <script>
-document.addEventListener('DOMContentLoaded', (event) => {
- const images = document.querySelectorAll('.image');
- images.forEach((image) => {
-   const dataUrl = image.dataset.url;
-   const canvas = document.getElementById(`canvas_${image.dataset.id}`);
-
-   // Base64からBlobへの変換
-   const byteString = atob(dataUrl.split(',')[1]);
-   const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0]
-   const ab = new ArrayBuffer(byteString.length);
-   const ia = new Uint8Array(ab);
-   for (let i = 0; i < byteString.length; i++) {
-     ia[i] = byteString.charCodeAt(i);
-   }
-   const blob = new Blob([ab], {type: mimeString});
-
-   // BlobからImageBitmapを作成し、canvasに描画
-   createImageBitmap(blob).then(imgBitmap => {
-     canvas.width = imgBitmap.width;
-     canvas.height = imgBitmap.height;
-     const ctx = canvas.getContext("2d");
-     ctx.drawImage(imgBitmap, 0, 0);
-   });
- });
-});
-</script> %>
+<%# 同じcanvas_139になってしまう %>
+<%# photos?search=neko:133 Uncaught TypeError: my_modal_139.showModal is not a function
+    at HTMLDivElement.onclick (photos?search=neko:133:68) %>

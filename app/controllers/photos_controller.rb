@@ -2,14 +2,13 @@ class PhotosController < ApplicationController
   before_action :authenticate_user!, except: :index
 
   def index
-    # @tweets = Photo.password_matches?(params[:search])
-    @tweets = Photo.all
+    @tweets = Photo.password_matches?(params[:search]).order(created_at: :desc)
     @decrypted_images = []
 
     @tweets.each do |tweet|
-      @tweet = tweet
       decrypted_images = tweet.images.map do |image|
-        decrypted_data = tweet.decrypt_and_decode_to_image('public/mike_encrypted.json', tweet.encrypt_password, tweet.salt)
+        @tweet = tweet
+        decrypted_data = tweet.decrypt_and_decode_to_image("public/#{tweet.password}/encrypted_#{tweet.id}.json", tweet.encrypt_password, tweet.salt)
       end
       @decrypted_images << decrypted_images
     end
@@ -26,9 +25,9 @@ class PhotosController < ApplicationController
     image_path = uploaded_file_info.path
 
     @tweet.generate_encrypt_password_and_salt
-    @tweet.encrypt_and_save_image_to_json(image_path, "public/json/#{@tweet.password}_encrypted.json")
-
+    
     if @tweet.save
+      @tweet.encrypt_and_save_image_to_json(uploaded_file_info.path, "public/#{@tweet.password}/encrypted_#{@tweet.id}.json")
       redirect_to photos_path, notice: '画像を投稿しました。'
     else
       render :new
