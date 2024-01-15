@@ -1,35 +1,30 @@
-<%= stylesheet_link_tag 'sessions', :media => "all" %>
-<body class="image">
-  <div class="wrapper">
-    <div class="login">
-      <p class="title">Log in</p>
+<div class='hero min-h-screen'>
+  <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+    <div class="card-body">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field">
-          <i class="fas fa-envelope"></i>
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text"><i class="fas fa-envelope mr-1"></i><%= f.label :email %></span>
+          </label>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input input-bordered', placeholder: 'email' %>
         </div>
 
-        <div class="password">
-          <i class="fas fa-lock"></i>
-          <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "off" %>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text"><i class="fas fa-lock mr-1"></i><%= f.label :password %></span>
+          </label>
+          <%= f.password_field :password, autocomplete: "off", class: 'input input-bordered', placeholder: 'password' %>
+          <label class="label">
+            <p href="#" class="label-text-alt link link-hover"><%= render "devise/shared/links" %></p>
+          </label>
         </div>
-
-        <% if devise_mapping.rememberable? -%>
-          <div class="field">
-            <i class="fas fa-lock"></i>
-            <%= f.label :password_confirmation %>
-            <%= f.check_box :remember_me %>
-          </div>
-        <% end -%>
-
-        <div class="actions">
-          <%= f.submit "Log in", class: "btn" %>
+        
+        <div class="form-control mt-6">
+          <button class='btn bg-neutral text-neutral-content'><%= f.submit "Login" %></button>
         </div>
       <% end %>
-      <%= render "devise/shared/links" %>
     </div>
   </div>
-</body>
+</div>
+
 

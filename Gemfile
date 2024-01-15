@@ -6,11 +6,12 @@ ruby '3.2.2'
 gem 'rails', '~> 7.1', '>= 7.1.2'
 gem 'puma'
 gem 'sass-rails'
-gem 'webpacker'
-gem 'turbolinks'
+# gem 'webpacker'
+# gem 'turbolinks'
 gem 'jbuilder'
 gem 'bcrypt'
 gem 'bootsnap', require: false
+gem "importmap-rails"
 
 group :development, :test do
   gem 'sqlite3'
@@ -18,11 +19,18 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem 'rails-controller-testing'
 end
 
 group :development do
   gem 'web-console'
   gem 'rack-mini-profiler'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 group :test do
@@ -40,6 +48,11 @@ gem 'cloudinary'
 # 認証
 gem 'devise'
 gem 'dotenv-rails'
+
+gem 'cssbundling-rails'
+gem 'jsbundling-rails'
+gem 'tailwindcss-rails'
+gem 'turbo-rails'
 
 group :production do
   gem 'pg'

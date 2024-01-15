@@ -1,45 +1,42 @@
-<%= stylesheet_link_tag 'registrations', :media => "all" %>
-<body class="image2">
-  <div class="wrapper">
-    <div class="login">
-      <h2 class="title">Sign up</h2>
-    
+<div class='hero min-h-screen'>
+  <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+    <div class="card-body">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
-
-        <div class="field">
-          <i class="fas fa-user"></i>
-          <%= f.label :username %><br />
-          <%= f.text_field :username, autofocus: true %>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text"><i class="fas fa-user mr-1"></i><%= f.label :username %></span>
+          </label>
+          <%= f.text_field :username, autofocus: true, class: 'input input-bordered', placeholder: 'yamada taro', required: :true %>
         </div>
-
-        <div class="field">
-          <i class="fas fa-envelope"></i>
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text"><i class="fas fa-envelope mr-1"></i><%= f.label :email %></span>
+          </label>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input input-bordered', placeholder: 'email', required: :true %>
         </div>
-
-        <div class="field">
-          <i class="fas fa-lock"></i>
-          <%= f.label :password %>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text"><i class="fas fa-lock mr-1"></i><%= f.label :password %></span>
+          </label>
           <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <em>(<%= @minimum_password_length %> characters minimum)</em>
           <% end %><br />
-          <%= f.password_field :password, autocomplete: "new-password" %>
+          <%= f.password_field :password, autocomplete: "new-password", class: 'input input-bordered', placeholder: 'password', required: :true %>
         </div>
-
-        <div class="field">
-          <i class="fas fa-lock"></i>
-          <%= f.label :password_confirmation %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text"><i class="fas fa-lock mr-1"></i><%= f.label :password_confirmation %></span>
+          </label>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'input input-bordered', placeholder: 'password confirmation', required: :true %>
+          <label class="label">
+            <p href="#" class="label-text-alt link link-hover"><%= render "devise/shared/links" %></p>
+          </label>
         </div>
-
-        <div class="actions">
-          <%= f.submit "Sign up", class: "btn2" %>
+        <div class="form-control mt-6">
+          <button class='btn bg-neutral text-neutral-content'><%= f.submit "Sing up", disable_with: "Signing up..." %></button>
         </div>
       <% end %>
-
-      <%= render "devise/shared/links" %>
     </div>
   </div>
-</body>
+</div>

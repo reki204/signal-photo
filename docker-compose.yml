@@ -3,7 +3,7 @@ services:
   db:
     image: postgres:14.2-alpine
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - postgresql-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
   web:
@@ -15,5 +15,10 @@ services:
       - .:/myapp
     ports:
       - "3000:3000"
+    stdin_open: true
+    tty: true
     depends_on:
       - db
+volumes:
+  postgresql-data:
+    driver: local

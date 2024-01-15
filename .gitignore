@@ -42,3 +42,7 @@ yarn-debug.log*
 /.env
 
 coverage/
+
+public
+/app/assets/builds/*
+!/app/assets/builds/.keep
