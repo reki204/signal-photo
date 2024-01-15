@@ -2,10 +2,11 @@ class PhotosController < ApplicationController
   before_action :authenticate_user!, except: :index
 
   def index
-    @tweets = Photo.password_matches?(params[:search]).order(created_at: :desc)
+    @tweets = Photo.where(deleted_at: nil).password_matches?(params[:search]).order(created_at: :desc)
     @decrypted_images = []
 
     @tweets.each do |tweet|
+      next if tweet.created_at < 7.days.ago
       decrypted_images = tweet.images.map do |image|
         {
           tweet: tweet,
@@ -38,7 +39,7 @@ class PhotosController < ApplicationController
 
   def show
     tweet = Photo.find(params[:id])
-    tweet.destroy
+    tweet.update(deleted_at: Time.now)
     redirect_to photos_path, notice: '画像を削除しました。'
   end
 
