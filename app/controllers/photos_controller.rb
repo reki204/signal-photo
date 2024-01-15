@@ -36,10 +36,10 @@ class PhotosController < ApplicationController
     end
   end
 
-  def destroy
+  def show
     tweet = Photo.find(params[:id])
     tweet.destroy
-    redirect_to action: :index, notice: '画像を削除しました。'
+    redirect_to photos_path, notice: '画像を削除しました。'
   end
 
   private

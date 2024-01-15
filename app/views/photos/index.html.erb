@@ -10,20 +10,20 @@
       <% @decrypted_images.each_with_index do |data, index| %>
         <% decrypted_data = data[:image_data] %>
         <% tweet = data[:tweet] %>
-        <% if decrypted_data.present? %>
+        <% unless decrypted_data.blank? %>
           <% data_url = "data:image/jpeg;base64,#{Base64.strict_encode64(decrypted_data)}" %>
 
-          <div class="relative cursor-pointer">
-            <div onclick="my_modal_<%= index %>.showModal()">
+          <div class="relative">
+            <div>
               <canvas id="canvas_<%= index %>" class="object-cover w-full h-64 rounded-md"></canvas>
             </div>
             <%# 削除ボタン %>
             <% if user_signed_in? && current_user.id == tweet.user_id %>
-              <%= link_to "削除する", photo_path(tweet.id), method: :delete, remote: true, form: { data: { turbo_confirm: "削除しますか？"}}, class: "btn absolute bottom-2 right-2 px-4 py-2 bg-red-500 text-white rounded-md opacity-50 border-none" %>
+              <%= link_to "削除する", photo_path(tweet.id), method: :delete, remote: true, form: { data: { turbo_confirm: "削除しますか？" }}, class: "btn absolute bottom-2 right-2 px-4 py-2 bg-red-500 text-white rounded-md opacity-50 border-none" %>
             <% end %>
           </div>
 
-          <%# モーダル %>
+          <%# モーダル memo: canvas_idがうまくいかないため保留 %>
           <dialog id="my_modal_<%= index %>" class="modal">
             <div class="modal-box p-0 rounded-none">
               <canvas class="canvas_<%= index %>"></canvas>
@@ -38,24 +38,10 @@
               const imageDataURL = '<%= data_url %>';
               const canvasId = "canvas_<%= index %>";
               const canvas = document.getElementById(canvasId);
-
               // Base64からBlobへの変換
-              const byteString = atob(imageDataURL.split(',')[1]);
-              const mimeString = imageDataURL.split(',')[0].split(':')[1].split(';')[0]
-              const ab = new ArrayBuffer(byteString.length);
-              const ia = new Uint8Array(ab);
-              for (let i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-              }
-              const blob = new Blob([ab], {type: mimeString});
-
+              const blob = base64ToBlob(imageDataURL);
               // BlobからImageBitmapを作成し、canvasに描画
-              createImageBitmap(blob).then(imgBitmap => {
-                canvas.width = imgBitmap.width;
-                canvas.height = imgBitmap.height;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(imgBitmap, 0, 0);
-              });
+              drawImageOnCanvas(canvas, blob);
             });
           </script>
         <% end %>
@@ -63,3 +49,24 @@
     </div>
   </div>
 </div>
+
+<script>
+  const base64ToBlob = (imageDataURL) => {
+    const byteString = atob(imageDataURL.split(',')[1]);
+    const mimeString = imageDataURL.split(',')[0].split(':')[1].split(';')[0]
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], {type: mimeString});
+  };
+
+  const drawImageOnCanvas = async (canvas, blob) => {
+    const imgBitmap = await createImageBitmap(blob);
+    canvas.width = imgBitmap.width;
+    canvas.height = imgBitmap.height;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(imgBitmap, 0, 0);
+  };
+</script>
