@@ -16,17 +16,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run Ruby script to extract versions
+      - name: Run Ruby script to extract versions and update README
         run: |
-          ruby extract_versions.rb > versions.txt
+          # Extract Ruby and Rails versions
+          VERSION_RUBY=$(ruby -e 'puts RUBY_VERSION')
+          VERSION_RAILS=$(rails -v | cut -d " " -f 2)
 
-      - name: Update README
-        run: |
-          ruby extract_versions.rb > versions.txt
-          VERSION_RUBY=$(grep "Ruby Version" versions.txt | cut -d " " -f 3)
-          VERSION_RAILS=$(grep "Rails Version" versions.txt | cut -d " " -f 3)
-
-          # Update README
+          # Update README with the extracted versions
           sed -i "s/Ruby Version: .*/Ruby Version: $VERSION_RUBY/" README.md
           sed -i "s/Rails Version: .*/Rails Version: $VERSION_RAILS/" README.md
 
