@@ -1,0 +1,39 @@
+name: Update README with Ruby and Rails versions
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Ruby script to extract versions
+        run: |
+          ruby extract_versions.rb > versions.txt
+
+      - name: Update README
+        run: |
+          ruby extract_versions.rb > versions.txt
+          VERSION_RUBY=$(grep "Ruby Version" versions.txt | cut -d " " -f 3)
+          VERSION_RAILS=$(grep "Rails Version" versions.txt | cut -d " " -f 3)
+          
+          # Update README
+          sed -i "s/Ruby Version: .*/Ruby Version: $VERSION_RUBY/" README.md
+          sed -i "s/Rails Version: .*/Rails Version: $VERSION_RAILS/" README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "your-email@example.com"
+          git config --global user.name "GitHub Actions"
+          git add README.md
+          git commit -m "Update README with Ruby and Rails versions"
+          git push
