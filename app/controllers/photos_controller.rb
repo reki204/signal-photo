@@ -7,7 +7,8 @@ class PhotosController < ApplicationController
 
     @tweets.each do |tweet|
       next if tweet.created_at < 7.days.ago
-      decrypted_images = tweet.images.map do |image|
+
+      decrypted_images = tweet.images.map do |_image|
         {
           tweet: tweet,
           image_data: tweet.decrypt_and_decode_to_image("public/#{tweet.password}/encrypted_#{tweet.id}.json", tweet.encrypt_password, tweet.salt)
@@ -15,6 +16,12 @@ class PhotosController < ApplicationController
       end
       @decrypted_images.concat(decrypted_images)
     end
+  end
+
+  def show
+    tweet = Photo.find(params[:id])
+    tweet.update(deleted_at: Time.zone.now)
+    redirect_to photos_path, notice: '画像を削除しました。'
   end
 
   def new
@@ -25,7 +32,7 @@ class PhotosController < ApplicationController
     @tweet = Photo.new(photo_params)
     @tweet.user_id = current_user.id
     uploaded_file_info = @tweet.images.first
-    image_path = uploaded_file_info.path
+    uploaded_file_info.path
 
     @tweet.generate_encrypt_password_and_salt
     
@@ -35,12 +42,6 @@ class PhotosController < ApplicationController
     else
       render :new
     end
-  end
-
-  def show
-    tweet = Photo.find(params[:id])
-    tweet.update(deleted_at: Time.now)
-    redirect_to photos_path, notice: '画像を削除しました。'
   end
 
   private

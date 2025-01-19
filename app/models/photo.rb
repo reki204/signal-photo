@@ -22,7 +22,7 @@ class Photo < ApplicationRecord
 
   # 画像を暗号化してJSONに保存する
   def encrypt_and_save_image_to_json(image_path, json_path)
-    encryptor = ImageEncryptor.new(image_path, self.encrypt_password, self.salt)
+    encryptor = ImageEncryptor.new(image_path, encrypt_password, salt)
     encryptor.process_and_save_image_to_json(json_path)
   end
 
@@ -32,6 +32,6 @@ class Photo < ApplicationRecord
 
     encrypted_json_data = JSON.parse(File.read(encrypted_data))
     decryptor = ImageEncryptor.new(encrypted_json_data, encrypted_password, salt)
-    decrypted_data = decryptor.decrypt_image(encrypted_json_data)
+    decryptor.decrypt_image(encrypted_json_data)
   end
 end

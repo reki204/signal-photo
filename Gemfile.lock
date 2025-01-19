@@ -245,6 +245,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.8)
+    rack-cors (2.0.2)
+      rack (>= 2.0.0)
     rack-mini-profiler (3.3.1)
       rack (>= 1.2.0)
     rack-session (2.1.0)
@@ -452,6 +454,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   puma
+  rack-cors
   rack-mini-profiler
   rails (~> 8.0)
   rails-controller-testing
