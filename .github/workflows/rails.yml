@@ -1,19 +1,11 @@
 env:
   RUBY_VERSION: 3.2.2
 
-name: Update README with Ruby and Rails versions
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+name: Update README and Lint check
+on: push
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -24,7 +16,7 @@ jobs:
       - name: Set up Ruby environment
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "${{ env.ruby_version }}"
+          ruby-version: "${{ env.RUBY_VERSION }}"
 
       - name: Run Ruby script to update README
         run: ruby update_readme_versions.rb
@@ -39,3 +31,31 @@ jobs:
           git add README.md
           git diff --cached --quiet || git commit -m "Update README with Ruby and Rails versions"
           git push origin main
+
+  lint-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1.168.0
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+      - name: Cache node modules
+        uses: actions/cache@v2.1.4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+          yarn install --check-files
+
+      - name: Run RuboCop
+        run: bundle exec rubocop

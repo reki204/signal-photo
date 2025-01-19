@@ -25,9 +25,7 @@ class ImageEncryptor
     key_iv = OpenSSL::PKCS5.pbkdf2_hmac_sha1(@password, @salt, 100000, cipher.key_len + cipher.iv_len)
     cipher.key = key_iv[0, cipher.key_len]
     cipher.iv = iv
-    decrypted_data = cipher.update(encrypted_body) + cipher.final
-
-    decrypted_data
+    cipher.update(encrypted_body) + cipher.final
   end
 
   private

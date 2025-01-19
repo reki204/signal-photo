@@ -5,11 +5,11 @@ require 'pry-byebug'
 require 'base64'
 
 RSpec.describe ImageEncryptor, type: :model do
-  let(:image_path) { 
+  let(:image_path) do
     Rack::Test::UploadedFile.new(
       Rails.root.join("spec/fixtures/spec_image.jpg")
     )
-  }
+  end
   let(:password) { 'test_password' }
   let(:salt) { 'test_salt' }
 
@@ -92,7 +92,6 @@ RSpec.describe ImageEncryptor, type: :model do
   #   end
   # end
 
-
   describe '#process_and_save_image_to_json' do
     it 'reads the image file, converts to base64, encrypts, and saves to JSON' do
       # モックをセットアップ
@@ -128,14 +127,13 @@ RSpec.describe ImageEncryptor, type: :model do
       # allow(encryptor).to receive(:save_to_json)
 
       # encryptor.process_and_save_image_to_json('dummy_output.json')
-  
+
       # expect(encryptor).to have_received(:read_image).once
       # expect(encryptor).to have_received(:convert_to_base64).with('dummy image data').once
       # expect(encryptor).to have_received(:encrypt_image).with('dummy_base64_data').once
       # expect(encryptor).to have_received(:save_to_json).with('dummy_output.json', iv: 'dummy_iv', encrypted: 'dummy_encrypted_data').once
     end
   end
-  
 
   describe 'decrypt_image' do
     it 'correctly decrypts the image data' do
