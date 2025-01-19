@@ -22,7 +22,7 @@ class ImageEncryptor
     cipher = OpenSSL::Cipher.new('AES-256-CBC')
     cipher.decrypt
 
-    key_iv = OpenSSL::PKCS5.pbkdf2_hmac_sha1(@password, @salt, 100000, cipher.key_len + cipher.iv_len)
+    key_iv = OpenSSL::PKCS5.pbkdf2_hmac_sha1(@password, @salt, 100_000, cipher.key_len + cipher.iv_len)
     cipher.key = key_iv[0, cipher.key_len]
     cipher.iv = iv
     cipher.update(encrypted_body) + cipher.final
@@ -46,7 +46,7 @@ class ImageEncryptor
     cipher = OpenSSL::Cipher.new('AES-256-CBC')
     cipher.encrypt
 
-    key_iv = OpenSSL::PKCS5.pbkdf2_hmac_sha1(@password, @salt, 100000, cipher.key_len + cipher.iv_len)
+    key_iv = OpenSSL::PKCS5.pbkdf2_hmac_sha1(@password, @salt, 100_000, cipher.key_len + cipher.iv_len)
     iv = key_iv[cipher.key_len, cipher.iv_len]
     cipher.key = key_iv[0, cipher.key_len]
     cipher.iv = iv

@@ -53,6 +53,7 @@ gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 gem 'tailwindcss-rails'
 gem 'turbo-rails'
+gem 'rack-cors'
 
 group :production do
   gem 'pg'
