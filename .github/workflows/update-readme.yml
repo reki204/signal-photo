@@ -16,15 +16,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run Ruby script to extract versions and update README
-        run: |
-          # Extract Ruby and Rails versions
-          VERSION_RUBY=$(ruby -e 'puts RUBY_VERSION')
-          VERSION_RAILS=$(rails -v | cut -d " " -f 2)
+      - name: Set up Ruby environment
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2.2'
 
-          # Update README with the extracted versions
-          sed -i "s/Ruby Version: .*/Ruby Version: $VERSION_RUBY/" README.md
-          sed -i "s/Rails Version: .*/Rails Version: $VERSION_RAILS/" README.md
+      - name: Run Ruby script to update README
+        run: ruby update_readme_versions.rb
 
       - name: Set git config
         run: |
@@ -34,5 +32,5 @@ jobs:
       - name: Commit and push changes
         run: |
           git add README.md
-          git commit -m "Update README with Ruby and Rails versions"
+          git diff --cached --quiet || git commit -m "Update README with Ruby and Rails versions"
           git push
