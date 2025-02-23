@@ -5,10 +5,6 @@ ruby '3.2.2'
 
 gem 'rails', '~> 8.0'
 gem 'puma'
-# gem 'sass-rails'
-# gem 'webpacker'
-# gem 'turbolinks'
-# gem 'jbuilder'
 gem 'bcrypt'
 gem 'bootsnap', require: false
 gem "importmap-rails"
