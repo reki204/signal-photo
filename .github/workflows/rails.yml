@@ -1,20 +1,15 @@
-name: Update README with Ruby and Rails versions
+env:
+  RUBY_VERSION: 3.2.2
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+name: Update README and Lint check
+on: push
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: main
@@ -22,7 +17,7 @@ jobs:
       - name: Set up Ruby environment
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2.2'
+          ruby-version: "${{ env.RUBY_VERSION }}"
 
       - name: Run Ruby script to update README
         run: ruby update_readme_versions.rb
@@ -37,3 +32,18 @@ jobs:
           git add README.md
           git diff --cached --quiet || git commit -m "Update README with Ruby and Rails versions"
           git push origin main
+
+  lint-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+
+      - name: Run RuboCop
+        run: bundle exec rubocop

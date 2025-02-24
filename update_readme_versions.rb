@@ -9,10 +9,10 @@ ruby_version = nil
 rails_version = nil
 
 File.readlines(gemfile_path).each do |line|
-  if line.match(/^ruby\s+['"](.*)['"]$/)
-    ruby_version = $1
-  elsif line.match(/^gem ['"]rails['"]\s*,\s*['"](.*)['"]/)
-    rails_version = $1
+  if line =~ /^ruby\s+['"](.*)['"]$/
+    ruby_version = Regexp.last_match(1)
+  elsif line =~ /^gem ['"]rails['"]\s*,\s*['"](.*)['"]/
+    rails_version = Regexp.last_match(1)
   end
 end
 

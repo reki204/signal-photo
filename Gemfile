@@ -5,10 +5,6 @@ ruby '3.2.2'
 
 gem 'rails', '~> 8.0'
 gem 'puma'
-gem 'sass-rails'
-# gem 'webpacker'
-# gem 'turbolinks'
-gem 'jbuilder'
 gem 'bcrypt'
 gem 'bootsnap', require: false
 gem "importmap-rails"
@@ -49,10 +45,7 @@ gem 'cloudinary'
 gem 'devise'
 gem 'dotenv-rails'
 
-gem 'cssbundling-rails'
-gem 'jsbundling-rails'
-gem 'tailwindcss-rails'
-gem 'turbo-rails'
+gem 'rack-cors'
 
 group :production do
   gem 'pg'

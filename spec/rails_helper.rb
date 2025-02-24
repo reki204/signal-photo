@@ -35,7 +35,7 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = Rails.root.join('spec/fixtures').to_s
   config.after(:each) do
-    FileUtils.rm_rf(Dir[Rails.public_path]) if Rails.env.test?
+    FileUtils.rm_rf(Rails.public_path) if Rails.env.test?
   end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
