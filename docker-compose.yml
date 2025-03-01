@@ -1,15 +1,35 @@
-version: '3.8'
+version: "3.8"
 services:
   db:
     image: postgres:14.2-alpine
+    container_name: postgres-db
     volumes:
       - postgresql-data:/var/lib/postgresql/data
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: myapp_db
+    ports:
+      - "5432:5432"
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+
   api:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: rails-api
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 8080 -b '0.0.0.0'"
     volumes:
       - .:/myapp
@@ -17,7 +37,7 @@ services:
       - "8080:8080"
     environment:
       RAILS_ENV: development
-      DATABASE_URL: postgres://postgres:password@db:5432
+      DATABASE_URL: postgres://postgres:password@db:5432/myapp_db
     depends_on:
       - db
 volumes:
