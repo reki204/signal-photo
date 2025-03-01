@@ -9,6 +9,7 @@
 # ユーザーの作成（存在しない場合のみ）
 user = User.find_or_create_by!(id: 1) do |u|
   u.email = 'test@example.com'
+  u.username = 'testUser'
   u.password = 'password'
   u.password_confirmation = 'password'
 end
