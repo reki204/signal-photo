@@ -4,26 +4,24 @@ module Api
       before_action :authenticate_user!, except: :index
 
       def index
-        begin
-          photos = Photo.where(deleted_at: nil).password_matches?(params[:search]).order(created_at: :desc)
-          decrypted_images = photos.map do |photo|
-            next if photo.created_at < 7.days.ago
+        photos = Photo.where(deleted_at: nil).password_matches?(params[:search]).order(created_at: :desc)
+        decrypted_images = photos.filter_map do |photo|
+          next if photo.created_at < 7.days.ago
 
-            image_binary = photo.decrypt_and_decode_to_image("public/#{photo.password}/encrypted_#{photo.id}.json", photo.encrypt_password, photo.salt)
-            image_base64 = Base64.strict_encode64(image_binary)
+          image_binary = photo.decrypt_and_decode_to_image("public/#{photo.password}/encrypted_#{photo.id}.json", photo.encrypt_password, photo.salt)
+          image_base64 = Base64.strict_encode64(image_binary)
 
-            {
-              id: photo.id,
-              photo: photo,
-              image_data: image_base64
-            }
-          end.compact
-          render json: { status: :ok, message: 'success', data: decrypted_images }
-        rescue => e
-          # 例外が発生した場合は、Railsのログに記録して、500 Internal Server Errorレスポンスを返す
-          Rails.logger.error "Error in PhotosController#index: #{e.message}"
-          render json: { status: :error, message: 'Internal Server Error' }, status: :internal_server_error
+          {
+            id: photo.id,
+            photo: photo,
+            image_data: image_base64
+          }
         end
+        render json: { status: :ok, message: 'success', data: decrypted_images }
+      rescue StandardError => e
+        # 例外が発生した場合は、Railsのログに記録して、500 Internal Server Errorレスポンスを返す
+        Rails.logger.error "Error in PhotosController#index: #{e.message}"
+        render json: { status: :error, message: 'Internal Server Error' }, status: :internal_server_error
       end
 
       def create
