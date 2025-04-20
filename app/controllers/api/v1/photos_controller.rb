@@ -1,40 +1,18 @@
 module Api
   module V1
     class PhotosController < ApplicationController
+      before_action :set_search_password, only: :index
+      rescue_from StandardError, with: :handle_internal_error
+
       def index
-        search_password = request.headers['X-Search-Password']
-        photos = Photo.where(deleted_at: nil)
-                      .password_matches?(search_password)
-                      .order(created_at: :desc)
-
-        decrypted_images = photos.filter_map do |photo|
-          next if photo.created_at < 7.days.ago
-
-          encrypted_file_path = "public/#{photo.password}/encrypted_#{photo.id}.json"
-          next unless File.exist?(encrypted_file_path)
-
-          begin
-            image_binary = photo.decrypt_and_decode_to_image(
-              encrypted_file_path, 
-              photo.encrypt_password, 
-              photo.salt
-            )
-
-            image_base64 = Base64.strict_encode64(image_binary)
-
-            {
-              image_data: image_base64
-            }
-          rescue => e
-            Rails.logger.error "Error decrypting #{e.message}"
-            nil
-          end
-        end
+        decrypted_images = Photo
+          .non_deleted
+          .password_matches(@search_password)
+          .recent
+          .newer_than(7.days.ago)
+          .filter_map(&:decrypted_image_json)
 
         render json: { status: :ok, message: 'success', data: decrypted_images }
-      rescue StandardError => e
-        Rails.logger.error "Error in PhotosController#index: #{e.message}"
-        render json: { status: :internal_server_error, message: 'Internal Server Error' }
       end
 
       def create
@@ -70,8 +48,18 @@ module Api
       end
 
       private
+
+      def set_search_password
+        @search_password = request.headers['X-Search-Password']
+      end
+
       def photo_params
         params.require(:photo).permit(:password, images: [])
+      end
+
+      def handle_internal_error(e)
+        Rails.logger.error "Error in PhotosController #{e.class}: #{e.message}"
+        render json: { status: :internal_server_error, message: "Error: #{e.message}" }
       end
     end
   end
