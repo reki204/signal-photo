@@ -3,15 +3,13 @@ class Photo < ApplicationRecord
   mount_uploaders :images, ImageUploader
 
   with_options presence: true do
-    validates :password
-    validates :images
-    validates :encrypt_password
-    validates :salt
+    validates :password, :images, :encrypt_password, :salt
   end
 
-  def self.password_matches?(password)
-    password.present? ? where(password: password) : all
-  end
+  scope :non_deleted, -> { where(deleted_at: nil) }
+  scope :password_matches, ->(pwd) { pwd.present? ? where(password: pwd) : all }
+  scope :recent, -> { order(created_at: :desc) }
+  scope :newer_than, ->(time) { where('created_at >= ?', time) }
 
   # 暗号化パスワードとソルトを生成
   def generate_encrypt_password_and_salt
@@ -20,19 +18,30 @@ class Photo < ApplicationRecord
   end
 
   # 画像を暗号化してJSONに保存する
-  def encrypt_and_save_image_to_json(image_path, json_path)
-    raise "Image file not found at path: #{image_path}" unless File.exist?(image_path)
-
-    encryptor = ImageEncryptor.new(encrypt_password, salt)
-    encryptor.process_and_save_image_to_json(image_path, json_path)
+  def encrypt_and_store_images
+    images.each do |img|
+      source_path = img.current_path
+      json_path = storage_dir.join("encrypted_#{id}.json").to_s
+      ImageEncryptor.new(encrypt_password, salt)
+        .encrypt_and_save!(source_path, json_path)
+    end
   end
 
-  # 復号化して画像バイナリを返す
-  def decrypt_and_decode_to_image(encrypted_json_path, encrypted_password, salt)
-    raise "Encrypted file not found at path: #{encrypted_json_path}" unless File.exist?(encrypted_json_path)
+  # 復号化、画像バイナリのBase64を返す
+  def decrypted_image_json
+    json_path = storage_dir.join("encrypted_#{id}.json").to_s
+    return unless File.exist?(json_path)
 
-    encrypted_json_data = JSON.parse(File.read(encrypted_json_path))
-    decryptor = ImageEncryptor.new(encrypted_password, salt)
-    decryptor.decrypt_image(encrypted_json_data)
+    binary = ImageEncryptor.new(encrypt_password, salt).decrypt!(json_path)
+    { image_data: Base64.strict_encode64(binary) }
+  rescue StandardError => e
+    Rails.logger.error "Photo#decrypted_image_json #{e.message}"
+    nil
+  end
+
+  private
+
+  def storage_dir
+    Pathname.new(Rails.root).join('public', password)
   end
 end
