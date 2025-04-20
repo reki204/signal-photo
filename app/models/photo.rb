@@ -9,7 +9,7 @@ class Photo < ApplicationRecord
   scope :non_deleted, -> { where(deleted_at: nil) }
   scope :password_matches, ->(pwd) { pwd.present? ? where(password: pwd) : all }
   scope :recent, -> { order(created_at: :desc) }
-  scope :newer_than, ->(time) { where('created_at >= ?', time) }
+  scope :newer_than, ->(time) { where(created_at: time..) }
 
   # 暗号化パスワードとソルトを生成
   def generate_encrypt_password_and_salt

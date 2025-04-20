@@ -28,7 +28,7 @@ module Api
 
           # 保存先ディレクトリを作成
           target_dir = "public/#{photo.password}"
-          FileUtils.mkdir_p(target_dir) unless Dir.exist?(target_dir)
+          FileUtils.mkdir_p(target_dir)
 
           # 画像を暗号化してJSONに保存
           json_path = "#{target_dir}/encrypted_#{photo.id}.json"
@@ -36,10 +36,10 @@ module Api
 
           render json: { status: :ok, message: 'success' }
         else
-          render json: { 
-            status: :unprocessable_entity, 
-            message: 'Validation error', 
-            errors: photo.errors 
+          render json: {
+            status: :unprocessable_entity,
+            message: 'Validation error',
+            errors: photo.errors
           }, status: :unprocessable_entity
         end
       rescue StandardError => e
@@ -57,9 +57,9 @@ module Api
         params.require(:photo).permit(:password, images: [])
       end
 
-      def handle_internal_error(e)
-        Rails.logger.error "Error in PhotosController #{e.class}: #{e.message}"
-        render json: { status: :internal_server_error, message: "Error: #{e.message}" }
+      def handle_internal_error(error)
+        Rails.logger.error "Error in PhotosController #{error.class}: #{error.message}"
+        render json: { status: :internal_server_error, message: "Error: #{error.message}" }
       end
     end
   end

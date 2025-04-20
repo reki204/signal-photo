@@ -18,7 +18,7 @@ class ImageEncryptor
   def encrypt_and_save!(image_path, json_path)
     raise Errno::ENOENT, "Image not found: #{image_path}" unless File.exist?(image_path)
 
-    image_data = File.binread(image_path)
+    data = File.binread(image_path)
     encrypted = encrypt(data)
     write_json!(json_path, encrypted)
   end
@@ -77,7 +77,7 @@ class ImageEncryptor
     key, _iv = derive_key_and_iv(cipher)
 
     iv_body = Base64.strict_decode64(payload['iv'])
-    encrypted_body    = Base64.strict_decode64(payload['encrypted'])
+    encrypted_body = Base64.strict_decode64(payload['encrypted'])
 
     cipher.key = key
     cipher.iv  = iv_body
@@ -89,8 +89,8 @@ class ImageEncryptor
 
   # PBKDF2 でキー＋IV を導出
   def derive_key_and_iv(cipher)
-    key_iv = OpenSSL::PKCS5.
-      pbkdf2_hmac_sha1(@password, @salt, ITERATIONS, cipher.key_len + cipher.iv_len)
+    key_iv = OpenSSL::PKCS5
+      .pbkdf2_hmac_sha1(@password, @salt, ITERATIONS, cipher.key_len + cipher.iv_len)
 
     key = key_iv[0, cipher.key_len]
     iv  = key_iv[cipher.key_len, cipher.iv_len]
