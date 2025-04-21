@@ -1,9 +1,12 @@
-FROM ruby:3.2.2-slim
+FROM ruby:3.4.3-slim
 
 RUN apt-get update -qq && apt-get install -y \
     build-essential \
+    pkg-config \
+    libyaml-dev \
     libpq-dev \
-    postgresql-client
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /myapp
 WORKDIR /myapp
