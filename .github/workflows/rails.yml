@@ -1,5 +1,5 @@
 env:
-  RUBY_VERSION: 3.2.2
+  RUBY_VERSION: 3.4.3
 
 name: Update README and Lint check
 on: push
