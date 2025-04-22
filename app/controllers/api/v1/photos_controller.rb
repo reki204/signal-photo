@@ -12,7 +12,7 @@ module Api
           .newer_than(7.days.ago)
           .filter_map(&:decrypted_image_json)
 
-        render json: { status: :ok, message: 'success', data: decrypted_images }
+        render json: { status: :success, message: 'success', data: decrypted_images }
       end
 
       def create
@@ -34,7 +34,7 @@ module Api
           json_path = "#{target_dir}/encrypted_#{photo.id}.json"
           photo.encrypt_and_save_image_to_json(uploaded_file_path, json_path)
 
-          render json: { status: :ok, message: 'success' }
+          render json: { status: :success, message: 'success' }
         else
           render json: {
             status: :unprocessable_entity,
