@@ -41,11 +41,16 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # 画像系
 gem 'carrierwave'
 gem 'cloudinary'
+gem 'image_processing', '>= 1.2'
+
 # 認証
 gem 'devise'
 gem 'dotenv-rails'
 
 gem 'rack-cors'
+
+gem 'aws-sdk-s3', require: false
+gem 'attr_encrypted'
 
 group :production do
   gem 'pg'
