@@ -18,33 +18,19 @@ module Api
       def create
         photo = Photo.new(photo_params)
         photo.user_id = current_user.id
-
-        # 暗号化のためのパスワードとソルトを生成
         photo.generate_encrypt_password_and_salt
 
         if photo.save
-          # アップロードされたファイルのパスを取得
-          uploaded_file_path = photo.images.first.current_path
-
-          # 保存先ディレクトリを作成
-          target_dir = "public/#{photo.password}"
-          FileUtils.mkdir_p(target_dir)
-
-          # 画像を暗号化してJSONに保存
-          json_path = "#{target_dir}/encrypted_#{photo.id}.json"
-          photo.encrypt_and_save_image_to_json(uploaded_file_path, json_path)
-
+          # 画像の暗号化と保存
+          photo.encrypt_and_store_images
           render json: { status: :success, message: 'success' }
         else
           render json: {
             status: :unprocessable_entity,
             message: 'Validation error',
             errors: photo.errors
-          }, status: :unprocessable_entity
+          }
         end
-      rescue StandardError => e
-        Rails.logger.error "Error in PhotosController#create: #{e.message}"
-        render json: { status: :internal_server_error, message: "Error: #{e.message}" }
       end
 
       private
@@ -54,7 +40,7 @@ module Api
       end
 
       def photo_params
-        params.require(:photo).permit(:password, images: [])
+        params.require(:photo).permit(:password, encrypted_image: [])
       end
 
       def handle_internal_error(error)
