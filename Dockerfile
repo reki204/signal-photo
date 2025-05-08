@@ -6,6 +6,7 @@ RUN apt-get update -qq && apt-get install -y \
     libyaml-dev \
     libpq-dev \
     postgresql-client \
+    vim \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /myapp
