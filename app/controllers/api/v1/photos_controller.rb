@@ -17,12 +17,14 @@ module Api
 
       def create
         photo = Photo.new(photo_params)
-        photo.user_id = current_user.id
         photo.generate_encrypt_password_and_salt
 
         if photo.save
-          # 画像の暗号化と保存
-          photo.encrypt_and_store_images
+          # 画像ファイルを暗号化してR2に保存
+          if params[:photo][:images].present?
+            photo.encrypt_and_attach_image(params[:photo][:encrypted_image])
+          end
+
           render json: { status: :success, message: 'success' }
         else
           render json: {
