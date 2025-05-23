@@ -21,7 +21,7 @@ module Api
 
         if photo.save
           # 画像ファイルを暗号化してR2に保存
-          photo.encrypt_and_attach_image(params[:photo][:encrypted_image]) if params[:photo][:images].present?
+          photo.encrypt_and_attach_image(params[:photo][:images]) if params[:photo][:images].present?
 
           render json: { status: :success, message: 'success' }
         else
@@ -40,7 +40,7 @@ module Api
       end
 
       def photo_params
-        params.require(:photo).permit(:password, encrypted_image: [])
+        params.require(:photo).permit(:password, images: [])
       end
 
       def handle_internal_error(error)
